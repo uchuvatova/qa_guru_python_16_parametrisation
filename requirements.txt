@@ -1,2 +1,3 @@
 pytest
-allure-pytest
+selene
+selenium~=4.16.0
