@@ -20,27 +20,27 @@ class Dim:
         return f"({self.width}_{self.height})"
 
 
-dim1 = Dim(width=3840, height=2160)
-dim2 = Dim(width=1920, height=1080)
-dim3 = Dim(width=353, height=745)
-dim4 = Dim(width=414, height=896)
+desktop1 = Dim(width=3840, height=2160)
+desktop2 = Dim(width=1920, height=1080)
+mobile1 = Dim(width=353, height=745)
+mobile2 = Dim(width=414, height=896)
 
 only_desktop = pytest.mark.parametrize(
-    "desktop_browser", [(dim1.width, dim1.height), (dim2.width, dim2.height)],
+    "desktop_browser", [(desktop1.width, desktop1.height), (desktop2.width, desktop2.height)],
     indirect=True, ids=repr)
 only_mobile = pytest.mark.parametrize(
-    "mobile_browser", [(dim3.width, dim3.height), (dim4.width, dim4.height)],
+    "mobile_browser", [(mobile1.width, mobile1.height), (mobile2.width, mobile2.height)],
     indirect=True, ids=repr)
 
 
-@pytest.fixture(params=[(dim1.width, dim1.height), (dim2.width, dim2.height)],
+@pytest.fixture(params=[(desktop1.width, desktop1.height), (desktop2.width, desktop2.height)],
                 ids=repr)
 def desktop_browser(request):
     browser.config.window_width = request.param[0]
     browser.config.window_height = request.param[1]
 
 
-@pytest.fixture(params=[(dim3.width, dim3.height), (dim4.width, dim4.height)],
+@pytest.fixture(params=[(mobile1.width, mobile1.height), (mobile2.width, mobile2.height)],
                 ids=repr)
 def mobile_browser(request):
     browser.config.window_width = request.param[0]
@@ -48,10 +48,10 @@ def mobile_browser(request):
 
 
 @pytest.fixture(
-    params=[(dim1.width, dim1.height),
-            (dim2.width, dim2.height),
-            (dim3.width, dim3.height),
-            (dim4.width, dim4.height)], ids=repr)
+    params=[(desktop1.width, desktop1.height),
+            (desktop2.width, desktop2.height),
+            (mobile1.width, mobile1.height),
+            (mobile2.width, mobile2.height)], ids=repr)
 def browser_size(request):
     browser.config.window_width = request.param[0]
     browser.config.window_height = request.param[1]
