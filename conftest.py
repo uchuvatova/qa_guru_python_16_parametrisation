@@ -12,7 +12,7 @@ browser.config.driver = driver
 
 
 @dataclass
-class Dim:
+class Size:
     width: int
     height: int
 
@@ -20,10 +20,10 @@ class Dim:
         return f"({self.width}_{self.height})"
 
 
-desktop1 = Dim(width=3840, height=2160)
-desktop2 = Dim(width=1920, height=1080)
-mobile1 = Dim(width=353, height=745)
-mobile2 = Dim(width=414, height=896)
+desktop1 = Size(width=3840, height=2160)
+desktop2 = Size(width=1920, height=1080)
+mobile1 = Size(width=353, height=745)
+mobile2 = Size(width=414, height=896)
 
 
 @pytest.fixture(
