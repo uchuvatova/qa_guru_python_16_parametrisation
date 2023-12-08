@@ -25,11 +25,26 @@ desktop2 = Dim(width=1920, height=1080)
 mobile1 = Dim(width=353, height=745)
 mobile2 = Dim(width=414, height=896)
 
+
+@pytest.fixture(
+    params=[(desktop1.width, desktop1.height),
+            (desktop2.width, desktop2.height),
+            (mobile1.width, mobile1.height),
+            (mobile2.width, mobile2.height)], ids=repr)
+def browser_size(request):
+    browser.config.window_width = request.param[0]
+    browser.config.window_height = request.param[1]
+    if request.param[0] >= request.param[1]:
+        return "desktop"
+    else:
+        return "mobile"
+
+
 only_desktop = pytest.mark.parametrize(
-    "desktop_browser", [(desktop1.width, desktop1.height), (desktop2.width, desktop2.height)],
+    "browser_size", [(desktop1.width, desktop1.height), (desktop2.width, desktop2.height)],
     indirect=True, ids=repr)
 only_mobile = pytest.mark.parametrize(
-    "mobile_browser", [(mobile1.width, mobile1.height), (mobile2.width, mobile2.height)],
+    "browser_size", [(mobile1.width, mobile1.height), (mobile2.width, mobile2.height)],
     indirect=True, ids=repr)
 
 
@@ -45,17 +60,3 @@ def desktop_browser(request):
 def mobile_browser(request):
     browser.config.window_width = request.param[0]
     browser.config.window_height = request.param[1]
-
-
-@pytest.fixture(
-    params=[(desktop1.width, desktop1.height),
-            (desktop2.width, desktop2.height),
-            (mobile1.width, mobile1.height),
-            (mobile2.width, mobile2.height)], ids=repr)
-def browser_size(request):
-    browser.config.window_width = request.param[0]
-    browser.config.window_height = request.param[1]
-    if request.param[0] >= request.param[1]:
-        return "desktop"
-    else:
-        return "mobile"
